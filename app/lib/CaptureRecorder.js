@@ -8,6 +8,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const request = require('request');
 const tildify = require('tildify');
+const { resolveFilePath } = require('./helpers');
 
 const now = () => new Date().getTime();
 
@@ -44,11 +45,6 @@ function writeFile(filePath, data) {
   };
 
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-}
-
-function resolveFilePath(capturePath, url) {
-  const fileName = url.replace(/\//g, '|');
-  return path.resolve(capturePath, fileName);
 }
 
 CaptureRecorder.prototype.record = function record(req, res) {

@@ -62,17 +62,30 @@ module.exports = function App(config) {
   // Attach RouteManager to app object, the primary set of mockyeah API methods.
   app.routeManager = new RouteManager(app);
 
-  app.proxying = app.config.proxy;
+  app.locals.proxying = app.config.proxy;
+
+  app.locals.recording = true;
+  app.locals.recordingSuiteName = 'mySuite';
 
   app.use('/', proxyRoute);
 
   app.proxy = on => {
-    app.proxying = typeof on !== 'undefined' ? on : true;
+    app.locals.proxying = typeof on !== 'undefined' ? on : true;
+  };
+
+  app.record = (on, name) => {
+    app.locals.recording = typeof on !== 'undefined' ? on : true;
+    if (app.locals.recording) {
+      if (!name) throw new Error('Must provide a recording name.');
+      app.locals.recordingSuiteName = name;
+    } else {
+      delete app.locals.recordingSuiteName;
+    }
   };
 
   app.reset = () => {
     app.routeManager.reset();
-    app.proxying = app.config.proxy;
+    app.locals.proxying = app.config.proxy;
     app.middlewares = [];
   };
 

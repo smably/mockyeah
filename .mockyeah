@@ -1,0 +1,12 @@
+{
+  "name": "mockyeah",
+  "output": true,
+  "journal": true,
+  "verbose": true,
+  "proxy": true,
+  "host": "localhost",
+  "port": 4001,
+  "fixturesDir": "fixtures",
+  "capturesDir": "captures"
+}
+
